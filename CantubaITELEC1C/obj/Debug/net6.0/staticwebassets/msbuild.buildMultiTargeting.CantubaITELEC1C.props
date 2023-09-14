@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\CantubaITELEC1C.props" />
+</Project>
