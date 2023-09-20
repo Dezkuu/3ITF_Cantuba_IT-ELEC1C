@@ -17,6 +17,7 @@
         <td>Course</td>
         <td>Admission Date</td>
         <td>Details</td>
+        <td>Update</td>
 
 
     </tr>
@@ -27,7 +28,8 @@
             <td>@student.IsRegular</td>
             <td>@student.Course</td>
             <td>@student.AdmissionDate</td>
-            <td><a asp-action="ShowDetail" asp-route-id="@student.Id">Show Details</a></td>
+            <td><a asp-action="ShowDetail" asp-route-id="@student.Id" class="btn btn-primary">Show Details</a></td>
+            <td><a asp-action="UpdateStudent" asp-route-id="@student.Id" class="btn btn-primary">Update</a></td>
 
         </tr>
     }

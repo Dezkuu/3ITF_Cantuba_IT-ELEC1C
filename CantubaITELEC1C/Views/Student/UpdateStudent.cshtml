@@ -2,13 +2,13 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model Student;
-<h1>Create a new Student</h1><br />
+<h1>Update Student</h1><br />
 
 
-<form asp-action="AddStudent" asp-controller="Student" method="post">
+<form asp-action="UpdateStudent" asp-controller="Student" method="post">
     <div class="form-group">
-        <label asp-for="Id">Id</label>
-        <input asp-for="Id" placeholder="Enter Id">
+        <label asp-for="Id" hidden>Id</label>
+        <input asp-for="Id" placeholder="Enter Id" hidden>
     </div><br />
 
     <div class="form-group">
@@ -41,5 +41,6 @@
         <input asp-for="Email" placeholder="Enter Email">
     </div><br />
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Update</button>
+    <button type="button" onclick="history.back()" class="btn btn-secondary">Cancel</button>
 </form>
