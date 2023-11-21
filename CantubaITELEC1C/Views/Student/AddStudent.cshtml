@@ -7,37 +7,37 @@
 
 <form asp-action="AddStudent" asp-controller="Student" method="post">
     <div class="form-group">
-        <label asp-for="Id">Id</label>
+        <label asp-for="Id"></label>
         <input asp-for="Id" placeholder="Enter Id">
     </div><br />
 
     <div class="form-group">
-        <label asp-for="FirstName">First Name</label>
+        <label asp-for="FirstName"></label>
         <input asp-for="FirstName" placeholder="Enter First Name">
     </div><br />
 
     <div class="form-group">
-        <label asp-for="LastName">Last Name</label>
+        <label asp-for="LastName"></label>
         <input asp-for="LastName" placeholder="Enter Last Name">
     </div><br />
 
     <div class="form-group">
-        <label asp-for="IsRegular">Status</label>
+        <label asp-for="IsRegular"></label>
         <select asp-for="IsRegular" asp-items="@Html.GetEnumSelectList(typeof(IsRegular))"></select>
     </div><br />
 
     <div class="form-group">
-        <label asp-for="Course">Course</label>
+        <label asp-for="Course"></label>
         <select asp-for="Course" asp-items="@Html.GetEnumSelectList(typeof(Course))"></select>
     </div><br />
 
     <div class="form-group">
-        <label asp-for="AdmissionDate">Date Enrolled</label>
+        <label asp-for="AdmissionDate"></label>
         <input asp-for="AdmissionDate">
     </div><br />
 
     <div class="form-group">
-        <label asp-for="Email">Email</label>
+        <label asp-for="Email"></label>
         <input asp-for="Email" placeholder="Enter Email">
     </div><br />
 

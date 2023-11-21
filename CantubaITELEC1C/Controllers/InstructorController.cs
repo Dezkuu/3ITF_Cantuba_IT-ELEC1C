@@ -1,36 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CantubaITELEC1C.Models;
-
+using CantubaITELEC1C.Services;
 
 namespace CantubaITELEC1C.Controllers
 {
     public class InstructorController : Controller
     {
-        List<Instructor> InstructorList = new List<Instructor>
-            {
-                new Instructor()
-                {
-                    Id= 1,FirstName = "Dusk",LastName = "Cantuba", IsTenured = IsTenured.Probationary, Rank = Rank.AssistantProfessor, HiringDate = DateTime.Parse("2022-08-26"), Email = "duskdenilson.cantuba.cics@ust.edu.ph"
-                },
-                new Instructor()
-                {
-                    Id= 2,FirstName = "Dawn",LastName = "Cantuba", IsTenured = IsTenured.Permanent, Rank = Rank.AssociateProfessor, HiringDate = DateTime.Parse("2022-08-07"), Email = "dawnverosh.cantuba.cics@ust.edu.ph"
-                },
-                new Instructor()
-                {
-                    Id= 3,FirstName = "Richelle",LastName = "Cantuba", IsTenured = IsTenured.Permanent, Rank = Rank.Professor, HiringDate = DateTime.Parse("2020-01-25"), Email = "richelle.cantuba.cics@ust.edu.ph"
-                }
-            };
+        private readonly IMyFakeDataService _dummyData;
+
+        public InstructorController(IMyFakeDataService dummyData)
+        {
+            _dummyData = dummyData;
+        }
+
+
         public IActionResult Index()
         {
 
-            return View(InstructorList);
+            return View(_dummyData.InstructorList);
         }
 
         public IActionResult ShowDetail(int id)
         {
             //Search for the instructor whose id matches the given id
-            Instructor? instructor = InstructorList.FirstOrDefault(st => st.Id == id);
+            Instructor? instructor = _dummyData.InstructorList.FirstOrDefault(st => st.Id == id);
 
             if (instructor != null)//was an instructor found?
                 return View(instructor);
@@ -47,15 +40,15 @@ namespace CantubaITELEC1C.Controllers
         [HttpPost]
         public IActionResult AddInstructor(Instructor newInstructor)
         {
-            InstructorList.Add(newInstructor);
-            return View("Index", InstructorList);
+            _dummyData.InstructorList.Add(newInstructor);
+            return View("Index", _dummyData.InstructorList);
         }
 
 
         [HttpGet]
         public IActionResult UpdateInstructor(int id)
         {
-            Instructor? instructor = InstructorList.FirstOrDefault(st => st.Id == id);
+            Instructor? instructor = _dummyData.InstructorList.FirstOrDefault(st => st.Id == id);
 
             if (instructor != null)//was an instructor found?
                 return View(instructor);
@@ -66,7 +59,7 @@ namespace CantubaITELEC1C.Controllers
         [HttpPost]
         public IActionResult UpdateInstructor(Instructor instructorChanges)
         {
-            Instructor? instructor = InstructorList.FirstOrDefault(st => st.Id == instructorChanges.Id);
+            Instructor? instructor = _dummyData.InstructorList.FirstOrDefault(st => st.Id == instructorChanges.Id);
 
             if (instructor != null)
             {
@@ -77,7 +70,28 @@ namespace CantubaITELEC1C.Controllers
                 instructor.HiringDate = instructorChanges.HiringDate;
                 instructor.Email = instructorChanges.Email;
             }
-            return View("Index", InstructorList);
+            return View("Index", _dummyData.InstructorList);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            Instructor? instructor = _dummyData.InstructorList.FirstOrDefault(st => st.Id == id);
+
+            if (instructor != null)//was an instructor found?
+                return View(instructor);
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Instructor newInstructor)
+        {
+            Instructor? instructor = _dummyData.InstructorList.FirstOrDefault(st => st.Id == newInstructor.Id);
+
+            if (instructor != null)//was an instructor found?
+                _dummyData.InstructorList.Remove(instructor);
+            return View("Index", _dummyData.InstructorList);
         }
     }
 }

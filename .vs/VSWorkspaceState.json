@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\CantubaITELEC1C",
+    "\\CantubaITELEC1C\\Controllers",
+    "\\CantubaITELEC1C\\Models",
+    "\\CantubaITELEC1C\\Services",
+    "\\CantubaITELEC1C\\Views",
+    "\\CantubaITELEC1C\\Views\\Instructor",
+    "\\CantubaITELEC1C\\Views\\Student"
+  ],
+  "SelectedNode": "\\CantubaITELEC1C\\Views\\Instructor\\AddInstructor.cshtml",
+  "PreviewInSolutionExplorer": false
+}

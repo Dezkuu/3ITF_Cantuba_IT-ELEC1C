@@ -1,36 +1,29 @@
 ﻿﻿using Microsoft.AspNetCore.Mvc;
 using CantubaITELEC1C.Models;
-
+using CantubaITELEC1C.Services;
 
 namespace CantubaITELEC1C.Controllers
 {
     public class StudentController : Controller
     {
-        List<Student> StudentList = new List<Student>
-            {
-                new Student()
-                {
-                    Id= 1,FirstName = "Dusk",LastName = "Cantuba", IsRegular = IsRegular.Conditional, Course = Course.BSIT, AdmissionDate = DateTime.Parse("2022-08-26"), Email = "duskdenilson.cantuba.cics@ust.edu.ph"
-                },
-                new Student()
-                {
-                    Id= 2,FirstName = "Dawn",LastName = "Cantuba", IsRegular = IsRegular.Irregular, Course = Course.OTHER, AdmissionDate = DateTime.Parse("2022-08-07"), Email = "dawnverosh.cantuba.cics@ust.edu.ph"
-                },
-                new Student()
-                {
-                    Id= 3,FirstName = "Richelle",LastName = "Cantuba", IsRegular = IsRegular.Regular, Course = Course.OTHER, AdmissionDate = DateTime.Parse("2020-01-25"), Email = "richelle.cantuba.cics@ust.edu.ph"
-                }
-            };
+        private readonly IMyFakeDataService _dummyData;
+
+        public StudentController(IMyFakeDataService dummyData)
+        {
+            _dummyData = dummyData;
+        }
+
+
         public IActionResult Index()
         {
 
-            return View(StudentList);
+            return View(_dummyData.StudentList);
         }
 
         public IActionResult ShowDetail(int id)
         {
             //Search for the student whose id matches the given id
-            Student? student = StudentList.FirstOrDefault(st => st.Id == id);
+            Student? student = _dummyData.StudentList.FirstOrDefault(st => st.Id == id);
 
             if (student != null)//was an student found?
                 return View(student);
@@ -47,15 +40,15 @@ namespace CantubaITELEC1C.Controllers
         [HttpPost]
         public IActionResult AddStudent(Student newStudent)
         {
-            StudentList.Add(newStudent);
-            return View("Index", StudentList);
+            _dummyData.StudentList.Add(newStudent);
+            return RedirectToAction("Index");
         }
 
 
         [HttpGet]
         public IActionResult UpdateStudent(int id)
         {
-            Student? student = StudentList.FirstOrDefault(st => st.Id == id);
+            Student? student = _dummyData.StudentList.FirstOrDefault(st => st.Id == id);
 
             if (student != null)//was an student found?
                 return View(student);
@@ -66,7 +59,7 @@ namespace CantubaITELEC1C.Controllers
         [HttpPost]
         public IActionResult UpdateStudent(Student studentChanges)
         {
-            Student? student = StudentList.FirstOrDefault(st => st.Id == studentChanges.Id);
+            Student? student = _dummyData.StudentList.FirstOrDefault(st => st.Id == studentChanges.Id);
 
             if (student != null)
             {
@@ -77,7 +70,28 @@ namespace CantubaITELEC1C.Controllers
                 student.AdmissionDate = studentChanges.AdmissionDate;
                 student.Email = studentChanges.Email;
             }
-            return View("Index",StudentList);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            Student? student = _dummyData.StudentList.FirstOrDefault(st => st.Id == id);
+
+            if (student != null)//was an student found?
+                return View(student);
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Student newStudent)
+        {
+            Student? student = _dummyData.StudentList.FirstOrDefault(st => st.Id == newStudent.Id);
+
+            if (student != null)//was an student found?
+                _dummyData.StudentList.Remove(student);
+            return RedirectToAction("Index");
         }
     }
 }
